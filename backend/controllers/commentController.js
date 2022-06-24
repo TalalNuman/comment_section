@@ -12,5 +12,21 @@ const addComment = asyncHandler(async (req, res) => {
     .status(200)
     .json({ message: "Comment added successfully", data: comment });
 });
+// deleting a comment from the database
+const deleteComment = asyncHandler(async (req, res) => {
+  const comment = await Comment.findByIdAndDelete(req.params.id);
+  //   const comment = await Comment.findById(req.params.id);
+  //   await comment.remove();
+  res.status(200).json({ message: "Comment deleted successfully" });
+});
+// updating a comment in the database
+const updateComment = asyncHandler(async (req, res) => {
+  const comment = await Comment.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+  res
+    .status(200)
+    .json({ message: "Comment updated successfully", data: comment });
+});
 
-module.exports = { getComments, addComment };
+module.exports = { getComments, addComment, updateComment, deleteComment };
